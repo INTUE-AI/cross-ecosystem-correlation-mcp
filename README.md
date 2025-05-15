@@ -1,50 +1,137 @@
-# INTUE Documentation
+# INTUE Cross-Ecosystem Correlation MCP
 
-![Screenshot 2025-05-14 at 5 43 58 PM](https://github.com/user-attachments/assets/5c8a5251-898a-4224-bb4a-30c01f03980d)
+A sophisticated Model Context Protocol (MCP) for analyzing correlations between crypto ecosystems and asset categories.
 
-## INTUE Documentation
+## Overview
 
-### Welcome to INTUE
+The Cross-Ecosystem Correlation MCP enables deep analysis of relationships between different crypto ecosystems, revealing insights into capital flows, sentiment contagion, and market interdependencies. This MCP powers data-driven investment strategies by identifying emerging patterns across ecosystem boundaries.
 
-INTUE is the intelligence layer for autonomous trading agents, a comprehensive framework designed for quantitative analysis of cryptocurrency markets using advanced AI protocols and agent-based architecture.
+## Installation
 
-Our platform enables sophisticated signal detection, cross-ecosystem correlation analysis, and autonomous trade execution with unprecedented precision. By leveraging specialized Model Context Protocols (MCPs), INTUE bridges the gap between raw market data and actionable trading intelligence.
+```bash
+npm install @intue/cross-ecosystem-correlation-mcp
+```
 
-This documentation provides a comprehensive guide to the INTUE ecosystem, from high-level concepts to detailed technical specifications for developers, traders, and researchers looking to harness the power of autonomous trading intelligence.
+## Features
 
-Whether you're implementing an existing agent, developing custom MCPs, or creating entirely new agents for the marketplace, this documentation will serve as your definitive resource for working with the INTUE platform.\
-\
-Core Concepts
+- Multi-Ecosystem Analysis: Compare relationships between defined crypto ecosystems (DeFi, AI, Gaming, etc.)
+- Correlation Matrix: Generate complete correlation matrices across ecosystems and assets
+- Network Mapping: Visualize ecosystem relationships as directed network graphs
+- Flow Detection: Identify capital and sentiment flows between ecosystems
+- Leading Indicators: Discover which ecosystems lead or lag others
+- Correlation Breakdowns: Analyze by volume, price movement, social sentiment, and more
+- Temporal Analysis: Track how correlations evolve over different timeframes
 
-#### Agent Architecture
+## Usage
 
-INTUE agents are autonomous, specialized intelligence modules designed to perform specific market analysis functions. Each agent implements a modular architecture consisting of:
+### Basic Ecosystem Correlation
 
-* **Signal Generators**: Specialized algorithms for pattern detection across market data
-* **Decision Engine**: Processing pipeline for signal evaluation and action determination
-* **Execution Framework**: Interface layer for trade execution and position management
-* **Performance Analytics**: Self-evaluation and optimization mechanisms
+```javascript
+const { EcosystemCorrelator } = require('@intue/cross-ecosystem-correlation-mcp');
+const LunarCrushAdapter = require('@intue/lunarcrush-adapter');
 
-Agents communicate via standardized protocols, enabling composition of complex strategies from simpler building blocks. This modular design allows for continuous improvement and customization without disrupting the overall system.
+// Initialize with adapters
+const lunarcrush = new LunarCrushAdapter({ apiKey: 'YOUR_API_KEY' });
+const correlator = new EcosystemCorrelator({
+  adapters: { lunarcrush }
+});
 
-#### Model Context Protocols (MCPs)
+// Analyze correlations between ecosystems
+async function analyzeEcosystems() {
+  const correlations = await correlator.analyzeEcosystemCorrelations([
+    'ai-agents', 
+    'defi', 
+    'gaming'
+  ], { 
+    timeframe: '30d',
+    metric: 'price'
+  });
+  
+  console.log('Correlation matrix:', correlations.matrix);
+  console.log('Strongest correlation:', correlations.strongestPair);
+  console.log('Network graph data:', correlations.networkData);
+}
 
-MCPs form the foundation of INTUE's intelligence capabilities. These specialized processing modules transform raw market data into contextually relevant signals through:
+analyzeEcosystems();
+```
 
-* **Category Classification**: Ecosystem and token categorization with specialized metrics
-* **Metric Processing**: Standardized calculation of key performance indicators
-* **Correlation Detection**: Identification of relationships between disparate data points
-* **Advanced Analysis**: Statistical processing using sophisticated mathematical models
+### Leading/Lagging Analysis
 
-MCPs are composable, allowing agents to leverage multiple protocols simultaneously for enhanced signal detection and pattern recognition.
+```javascript
+// Analyze which ecosystems lead or lag others
+async function analyzeLeadLag() {
+  const leadLag = await correlator.analyzeLeadLagRelationships([
+    'ai-agents', 
+    'defi', 
+    'layer1'
+  ], {
+    timeframe: '90d',
+    interval: '1d',
+    metric: 'price'
+  });
+  
+  console.log('Leading ecosystems:', leadLag.leaders);
+  console.log('Lagging ecosystems:', leadLag.laggers);
+  console.log('Lead/lag matrix (days):', leadLag.lagMatrix);
+}
 
-#### Trading Execution Framework
+analyzeLeadLag();
+```
 
-The execution layer provides standardized interfaces to multiple exchanges through adapter modules that handle:
+### Capital Flow Analysis
 
-* **Order Management**: Precise execution with minimal slippage
-* **Position Tracking**: Real-time monitoring of active positions
-* **Risk Management**: Automated stop-loss, take-profit, and position sizing
-* **Exchange-Specific Optimizations**: Adapter-level specialization for each venue
+```javascript
+// Analyze capital flows between ecosystems
+async function analyzeCapitalFlows() {
+  const flows = await correlator.analyzeCapitalFlows([
+    'ai-agents', 
+    'defi', 
+    'gaming',
+    'layer1'
+  ], {
+    timeframe: '14d',
+    minFlowPercentage: 5 // Only show significant flows (>5%)
+  });
+  
+  console.log('Flow matrix:', flows.flowMatrix);
+  console.log('Net inflows by ecosystem:', flows.netInflows);
+  console.log('Strongest flows:', flows.significantFlows);
+}
 
-This framework ensures consistent behavior across different trading venues while optimizing for the unique characteristics of each exchange.
+analyzeCapitalFlows();
+```
+
+## API Reference
+
+### EcosystemCorrelator Constructor
+
+- `adapters`: Object containing data adapters (lunarcrush, etc.)
+- `cache`: Optional cache instance
+- `ttl`: Cache TTL in milliseconds
+
+### Main Methods
+
+- `analyzeEcosystemCorrelations(ecosystems, options)`: Generate correlation matrix
+- `analyzeAssetCorrelations(assets, options)`: Generate asset-to-asset correlations
+- `analyzeLeadLagRelationships(ecosystems, options)`: Find leading/lagging relationships
+- `analyzeCapitalFlows(ecosystems, options)`: Track capital movement between ecosystems
+- `generateCorrelationMatrix(data, options)`: Create correlation matrix from any dataset
+- `generateNetworkGraph(correlationMatrix, options)`: Convert matrix to network graph
+
+### Options
+
+- `timeframe`: Time window for analysis ('1d', '7d', '30d', etc.)
+- `interval`: Data resolution ('1h', '1d', '1w')
+- `metric`: Metric to correlate ('price', 'volume', 'sentiment', 'combined')
+- `minCorrelation`: Minimum correlation strength to include (0-1)
+- `lagMax`: Maximum lead/lag days to check
+
+## Related Packages
+
+- `@intue/core` - Core utilities for the INTUE ecosystem
+- `@intue/lunarcrush-adapter` - LunarCrush API adapter
+- `@intue/sentiment-analysis-mcp` - Sentiment analysis MCP
+
+## License
+
+MIT
